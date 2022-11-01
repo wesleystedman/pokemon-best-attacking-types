@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Pokemon Type Coverage</title>
+</head>
+
+<body>
+    <h1>Best Pokemon Attacking Types Calculator</h1>
+
+    <div class="controls-version">
+        <label htmlFor="version-select">Version: </label>
+        <select name="version-select" id="version-select" defaultValue="ruby-sapphire" onChange={handleVersionChange}>
+            <option value="red-blue">Red / Blue / Yellow</option>
+            <option value="gold-silver">Gold / Silver / Crystal</option>
+            <option value="ruby-sapphire">Ruby / Sapphire / Emerald / FireRed / LeafGreen</option>
+            <optgroup label="Gen 4">
+                <option value="diamond-pearl">Diamond / Pearl</option>
+                <option value="platinum">Platinum / HeartGold / SoulSilver</option>
+            </optgroup>
+            <optgroup label="Gen 5">
+                <option value="black-white">Black / White</option>
+                <option value="black-2-white-2">Black 2 / White 2</option>
+            </optgroup>
+            <optgroup label="Gen 6">
+                <option value="x-y">X / Y</option>
+                <option value="omega-ruby-alpha-sapphire">Omega Ruby / Alpha Sapphire</option>
+            </optgroup>
+            <optgroup label="Gen 7">
+                <option value="sun-moon">Sun / Moon</option>
+                <option value="ultra-sun-ultra-moon">Ultra Sun / Ultra Moon</option>
+            </optgroup>
+            <optgroup label="Romhacks">
+                <option value="renegade-platinum">Renegade Platinum</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="controls-types">
+        <label for="type1">Type 1: </label>
+        <select name="type1" id="type1" defaultValue="-1">
+            <option value="-1">Any</option>
+            <option value="0">Normal</option>
+            <option value="1">Fighting</option>
+            <option value="2">Flying</option>
+            <option value="3">Poison</option>
+            <option value="4">Ground</option>
+            <option value="5">Rock</option>
+            <option value="6">Bug</option>
+            <option value="7">Ghost</option>
+            <option value="8">Steel</option>
+            <option value="9">Fire</option>
+            <option value="10">Water</option>
+            <option value="11">Grass</option>
+            <option value="12">Electric</option>
+            <option value="13">Psychic</option>
+            <option value="14">Ice</option>
+            <option value="15">Dragon</option>
+            <option value="16">Dark</option>
+            <option value="17">Fairy</option>
+        </select>
+
+        <label for="type2">Type 2: </label>
+        <select name="type2" id="type2" defaultValue="-1">
+            <option value="-1">Any</option>
+            <option value="0">Normal</option>
+            <option value="1">Fighting</option>
+            <option value="2">Flying</option>
+            <option value="3">Poison</option>
+            <option value="4">Ground</option>
+            <option value="5">Rock</option>
+            <option value="6">Bug</option>
+            <option value="7">Ghost</option>
+            <option value="8">Steel</option>
+            <option value="9">Fire</option>
+            <option value="10">Water</option>
+            <option value="11">Grass</option>
+            <option value="12">Electric</option>
+            <option value="13">Psychic</option>
+            <option value="14">Ice</option>
+            <option value="15">Dragon</option>
+            <option value="16">Dark</option>
+            <option value="17">Fairy</option>
+        </select>
+
+        <label for="type3">Type 3: </label>
+        <select name="type3" id="type3" defaultValue="-1">
+            <option value="-1">Any</option>
+            <option value="0">Normal</option>
+            <option value="1">Fighting</option>
+            <option value="2">Flying</option>
+            <option value="3">Poison</option>
+            <option value="4">Ground</option>
+            <option value="5">Rock</option>
+            <option value="6">Bug</option>
+            <option value="7">Ghost</option>
+            <option value="8">Steel</option>
+            <option value="9">Fire</option>
+            <option value="10">Water</option>
+            <option value="11">Grass</option>
+            <option value="12">Electric</option>
+            <option value="13">Psychic</option>
+            <option value="14">Ice</option>
+            <option value="15">Dragon</option>
+            <option value="16">Dark</option>
+            <option value="17">Fairy</option>
+        </select>
+
+        <label for="type4">Type 4: </label>
+        <select name="type4" id="type4" defaultValue="-1">
+            <option value="-1">Any</option>
+            <option value="0">Normal</option>
+            <option value="1">Fighting</option>
+            <option value="2">Flying</option>
+            <option value="3">Poison</option>
+            <option value="4">Ground</option>
+            <option value="5">Rock</option>
+            <option value="6">Bug</option>
+            <option value="7">Ghost</option>
+            <option value="8">Steel</option>
+            <option value="9">Fire</option>
+            <option value="10">Water</option>
+            <option value="11">Grass</option>
+            <option value="12">Electric</option>
+            <option value="13">Psychic</option>
+            <option value="14">Ice</option>
+            <option value="15">Dragon</option>
+            <option value="16">Dark</option>
+            <option value="17">Fairy</option>
+        </select>
+    </div>
+
+    <div class="controls-fully-evolved">
+        <label for="fully-evolved">Consider only fully evolved Pokemon: </label>
+        <input type="checkbox" name="fully-evolved" id="fully-evolved">
+    </div>
+
+    <div class="controls-calculate">
+        <input type="button" value="Calculate">
+    </div>
+
+    <div class="results">
+        <h3>Results</h3>
+        <div id="results-go-here"></div>
+    </div>
+</body>
+
+</html>
