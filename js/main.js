@@ -26,3 +26,45 @@ function calculate(moveTypes, version, forceEvo) {
     });
     return results;
 }
+
+// cached element refs
+const versionSelectElem = document.getElementById('version-select');
+const type1Elem = document.getElementById('type1');
+const type2Elem = document.getElementById('type2');
+const type3Elem = document.getElementById('type3');
+const type4Elem = document.getElementById('type4');
+const fullyEvolvedElem = document.getElementById('fully-evolved');
+const resultsDivElem = document.getElementById('results-go-here');
+const optionsSteel = document.querySelectorAll('option[value="8"]');
+const optionsDark = document.querySelectorAll('option[value="16"]');
+const optionsFairy = document.querySelectorAll('option[value="17"]');
+
+// attach event handlers
+document.getElementById('calculate-button').addEventListener('click', handleCalculateButtonClick);
+versionSelectElem.addEventListener('change', handleVersionChange);
+
+
+function handleCalculateButtonClick (event) {
+    // get current input states
+    // figure out how to handle type selections
+    // call calculate however many times, accumulating results
+    // sort and display results
+}
+
+function handleVersionChange (event) {
+    if (VERSION_TO_TYPE_CHART[event.target.value] === 'gen1') {
+        optionsSteel.forEach(option => {option.disabled = true; option.selected = false});
+        optionsDark.forEach(option => {option.disabled = true; option.selected = false});
+        optionsFairy.forEach(option => {option.disabled = true; option.selected = false});
+    }
+    else if (VERSION_TO_TYPE_CHART[event.target.value] === 'gen2') {
+        optionsSteel.forEach(option => option.disabled = false);
+        optionsDark.forEach(option => option.disabled = false);
+        optionsFairy.forEach(option => {option.disabled = true; option.selected = false});
+    }
+    else if (VERSION_TO_TYPE_CHART[event.target.value] === 'gen6') {
+        optionsSteel.forEach(option => option.disabled = false);
+        optionsDark.forEach(option => option.disabled = false);
+        optionsFairy.forEach(option => option.disabled = false);
+    }
+}
