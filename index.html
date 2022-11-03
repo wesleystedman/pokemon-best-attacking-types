@@ -15,10 +15,10 @@
 
     <div class="controls-version">
         <label htmlFor="version-select">Version: </label>
-        <select name="version-select" id="version-select" defaultValue="ruby-sapphire" onChange={handleVersionChange}>
+        <select name="version-select" id="version-select" defaultValue="ruby-sapphire">
             <option value="red-blue">Red / Blue / Yellow</option>
             <option value="gold-silver">Gold / Silver / Crystal</option>
-            <option value="ruby-sapphire">Ruby / Sapphire / Emerald / FireRed / LeafGreen</option>
+            <option value="ruby-sapphire" selected>Ruby / Sapphire / Emerald / FireRed / LeafGreen</option>
             <optgroup label="Gen 4">
                 <option value="diamond-pearl">Diamond / Pearl</option>
                 <option value="platinum">Platinum / HeartGold / SoulSilver</option>
@@ -63,7 +63,7 @@
             <option value="14">Ice</option>
             <option value="15">Dragon</option>
             <option value="16">Dark</option>
-            <option value="17">Fairy</option>
+            <option value="17" disabled>Fairy</option>
         </select>
 
         <label for="type2">Type 2: </label>
@@ -87,7 +87,7 @@
             <option value="14">Ice</option>
             <option value="15">Dragon</option>
             <option value="16">Dark</option>
-            <option value="17">Fairy</option>
+            <option value="17" disabled>Fairy</option>
         </select>
 
         <label for="type3">Type 3: </label>
@@ -111,7 +111,7 @@
             <option value="14">Ice</option>
             <option value="15">Dragon</option>
             <option value="16">Dark</option>
-            <option value="17">Fairy</option>
+            <option value="17" disabled>Fairy</option>
         </select>
 
         <label for="type4">Type 4: </label>
@@ -135,7 +135,7 @@
             <option value="14">Ice</option>
             <option value="15">Dragon</option>
             <option value="16">Dark</option>
-            <option value="17">Fairy</option>
+            <option value="17" disabled>Fairy</option>
         </select>
     </div>
 
