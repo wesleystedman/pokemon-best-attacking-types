@@ -46,7 +46,7 @@ function handleCalculateButtonClick(event) {
     function calculateAndAccumulate(types) {
         let effectiveness = calculate(types, version, forceEvo);
         const sumSE = effectiveness['2'] + effectiveness['4'];
-        let typeComboStr = types.reduce((acc, typeNum) => `${acc} ${NUM_TO_TYPE[typeNum]}`, NUM_TO_TYPE[types[0]]);
+        let typeComboStr = types.reduce((acc, typeNum) => `${acc} ${NUM_TO_TYPE[typeNum]}`, '');
         typesAndSE.push([typeComboStr, sumSE]);
     }
     
@@ -66,21 +66,21 @@ function handleCalculateButtonClick(event) {
                             if (anyCount >= 4) {
                                 for (let moveType4 = moveType3 + 1; moveType4 < numTypes; moveType4++) {
                                     if (types.includes(moveType4)) continue;
-                                    calculateAndAccumulate([moveType1, moveType2, moveType3, moveType4, ...types]);
+                                    calculateAndAccumulate([...types, moveType1, moveType2, moveType3, moveType4]);
                                 }
                             }
                             else {
-                                calculateAndAccumulate([moveType1, moveType2, moveType3, ...types]);
+                                calculateAndAccumulate([...types, moveType1, moveType2, moveType3]);
                             }
                         }
                     }
                     else {
-                        calculateAndAccumulate([moveType1, moveType2, ...types]);
+                        calculateAndAccumulate([...types, moveType1, moveType2]);
                     }
                 }
             }
             else {
-                calculateAndAccumulate([moveType1, ...types]);
+                calculateAndAccumulate([...types, moveType1]);
             }
         }
     }
