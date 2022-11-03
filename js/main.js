@@ -1,6 +1,6 @@
-import getTypeEffectiveness from "./type-effectiveness";
-import POKEMON_DATA from "./pokemon-data";
-import { POKEMON_RANGES, VERSION_TO_TYPE_CHART, TYPE_TO_NUM, NUM_TO_TYPE } from "./constants";
+import getTypeEffectiveness from "./type-effectiveness.js";
+import POKEMON_DATA from "./pokemon-data.js";
+import { POKEMON_RANGES, VERSION_TO_TYPE_CHART, TYPE_TO_NUM, NUM_TO_TYPE } from "./constants.js";
 
 
 // cached element refs
