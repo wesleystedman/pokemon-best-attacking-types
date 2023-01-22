@@ -11,6 +11,8 @@ const type3Elem = document.getElementById('type3');
 const type4Elem = document.getElementById('type4');
 const fullyEvolvedElem = document.getElementById('fully-evolved');
 const resultsDivElem = document.getElementById('results-go-here');
+const optionsPhysical = document.querySelectorAll('option[value="physical"]');
+const optionsSpecial = document.querySelectorAll('option[value="special"]');
 const optionsSteel = document.querySelectorAll('option[value="8"]');
 const optionsDark = document.querySelectorAll('option[value="16"]');
 const optionsFairy = document.querySelectorAll('option[value="17"]');
@@ -33,13 +35,20 @@ function handleCalculateButtonClick(event) {
     // remove any "none"s
     types = types.filter(type => type !== 'none');
     // count and remove "any"s
-    let typesAndAnysCount = types.length;
+    let movesCount = types.length;
     types = types.filter(type => type !== 'any');
-    let anyCount = typesAndAnysCount - types.length;
+    let anyCount = movesCount - types.length;
+    // count and remove "physical"s
+    types = types.filter(type => type !== 'physical');
+    let physicalCount = movesCount - anyCount - types.length;
+    // count and remove "special"s
+    types = types.filter(type => type !== 'special');
+    let specialCount = movesCount - anyCount - physicalCount - types.length;
     // convert selected types to numbers
     types = types.map(type => parseInt(type));
 
-    const numTypes = VERSION_TO_TYPE_CHART[version] === 'gen1' ? 15 : VERSION_TO_TYPE_CHART[version] === 'gen2' ? 17 : 18
+    // cheat at number of types in gen 1, skip steel in processMultiOptions
+    const numTypes = VERSION_TO_TYPE_CHART[version] === 'gen1' ? 16 : VERSION_TO_TYPE_CHART[version] === 'gen2' ? 17 : 18
     const typesAndSE = [];
 
     // this part is kept separate to abstract the logic from the number of "any"s
@@ -50,43 +59,34 @@ function handleCalculateButtonClick(event) {
         typesAndSE.push([typeComboStr, sumSE]);
     }
     
-    // call calculate however many times, accumulating results, iterating through unselected types once for each "any" selected
-    if (anyCount >= 1) {
-        for (let moveType1 = 0; moveType1 < numTypes; moveType1++) {
-            if (types.includes(moveType1)) continue;
-            
-            if (anyCount >= 2) {
-                for (let moveType2 = moveType1 + 1; moveType2 < numTypes; moveType2++) {
-                    if (types.includes(moveType2)) continue;
+    function processMultiOptions(anys, physicals, specials, cursors) {
+        let lastCursor = cursors.length === 0 ? -1 : cursors[cursors.length - 1]
 
-                    if (anyCount >= 3) {
-                        for (let moveType3 = moveType2 + 1; moveType3 < numTypes; moveType3++) {
-                            if (types.includes(moveType3)) continue;
-
-                            if (anyCount >= 4) {
-                                for (let moveType4 = moveType3 + 1; moveType4 < numTypes; moveType4++) {
-                                    if (types.includes(moveType4)) continue;
-                                    calculateAndAccumulate([...types, moveType1, moveType2, moveType3, moveType4]);
-                                }
-                            }
-                            else {
-                                calculateAndAccumulate([...types, moveType1, moveType2, moveType3]);
-                            }
-                        }
-                    }
-                    else {
-                        calculateAndAccumulate([...types, moveType1, moveType2]);
-                    }
-                }
-            }
-            else {
-                calculateAndAccumulate([...types, moveType1]);
+        if (anys > 0) {
+            for (let moveType = lastCursor + 1; moveType < numTypes; moveType++) {
+                if (numTypes === 16 && moveType === 8) continue; // skip steel in gen 1
+                if (types.includes(moveType)) continue;
+                processMultiOptions(anys - 1, physicals, specials, [...cursors, moveType]);
             }
         }
+        else if (physicals > 0) {
+            if (lastCursor > 8) lastCursor = -1; // when an any loop is on the specials, start physicals loop at normal (0)
+            for (let moveType = lastCursor + 1; moveType < (numTypes === 16 ? 8 : 9); moveType++) {
+                if (types.includes(moveType)) continue;
+                processMultiOptions(anys, physicals - 1, specials, [...cursors, moveType]);
+            }
+        }
+        else if (specials > 0) {
+            // ignoring fairy for now since it can never come up
+            for (let moveType = Math.max(9, lastCursor + 1); moveType < (numTypes === 16 ? 16 : 17); moveType++) {
+                if (types.includes(moveType)) continue;
+                processMultiOptions(anys, physicals, specials - 1, [...cursors, moveType]);
+            }
+        }
+        else calculateAndAccumulate([...types, ...cursors]);
     }
-    else {
-        calculateAndAccumulate(types);
-    }
+
+    processMultiOptions(anyCount, physicalCount, specialCount, []);
 
     // sort results, highest number of SE targets first
     typesAndSE.sort((a, b) => b[1] - a[1]);
@@ -96,6 +96,7 @@ function handleCalculateButtonClick(event) {
 }
 
 function handleVersionChange(event) {
+    // enable/disable dark/steel/fairy types
     if (VERSION_TO_TYPE_CHART[event.target.value] === 'gen1') {
         optionsSteel.forEach(option => { option.disabled = true; option.selected = false });
         optionsDark.forEach(option => { option.disabled = true; option.selected = false });
@@ -110,6 +111,16 @@ function handleVersionChange(event) {
         optionsSteel.forEach(option => option.disabled = false);
         optionsDark.forEach(option => option.disabled = false);
         optionsFairy.forEach(option => option.disabled = false);
+    }
+
+    // enable/disable the physical/special options, because they're only relevant for gens 1-3
+    if (event.target.value === 'red-blue' || event.target.value === 'gold-silver' || event.target.value === 'ruby-sapphire') {
+        optionsPhysical.forEach(option => option.disabled = false);
+        optionsSpecial.forEach(option => option.disabled = false);
+    }
+    else {
+        optionsPhysical.forEach(option => { option.disabled = true; option.selected = false });
+        optionsSpecial.forEach(option => { option.disabled = true; option.selected = false });
     }
 }
 
